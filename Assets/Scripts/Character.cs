@@ -4,8 +4,8 @@ using System.Collections;
 
 public class Character : MonoBehaviour
 {
-    private int _speed = 20;
-    private int _rotationSpeed = 500;
+    [SerializeField] private int _speed = 20;
+    [SerializeField] private int _rotationSpeed = 500;
 
     public void MoveTo(Vector3 targetPosition, Action onArrived)
     {
@@ -18,7 +18,6 @@ public class Character : MonoBehaviour
         {
             Vector3 newPosition = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
             transform.position = Vector3.MoveTowards(transform.position, newPosition, Time.deltaTime * _speed);
-
             yield return null;
         }
 

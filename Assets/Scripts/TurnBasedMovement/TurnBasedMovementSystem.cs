@@ -10,6 +10,13 @@ public class TurnBasedMovementSystem : MonoBehaviour
     [SerializeField] private DiceRoller _diceRoller;
     [SerializeField] private Board _board;
 
+    public static TurnBasedMovementSystem Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         _diceRoller.OnDiceRolled += DiceRoller_OnDiceRolled;
@@ -34,7 +41,7 @@ public class TurnBasedMovementSystem : MonoBehaviour
         Player currentPlayer = _players[_turnIndex];
 
         int totalMoveAmount = firstDiceValue + secondDiceValue;
-        int playerLandIndex = currentPlayer.LandIndex;
+        int playerLandIndex = currentPlayer.Land.Index;
         int nextLandIndexToMove = playerLandIndex + totalMoveAmount;
 
         for (int i = playerLandIndex; i < nextLandIndexToMove; i++)
@@ -53,6 +60,9 @@ public class TurnBasedMovementSystem : MonoBehaviour
 
             yield return new WaitUntil(() => isMoving == false);
         }
+
+        Land arrivedLand = currentPlayer.Land;
+        arrivedLand.InvokeOnLanded(currentPlayer);
 
         _turnIndex = (_turnIndex + 1) % _players.Length;
     }

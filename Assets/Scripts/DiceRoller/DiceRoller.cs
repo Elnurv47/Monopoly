@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class DiceRoller : MonoBehaviour
 {
     private const int DICE_MIN_VALUE = 1;
-    private const int DICE_MAX_VALUE = 6;
+    private const int DICE_MAX_VALUE = 2;
 
     private int _firstRolledDiceValue;
     private int _secondRolledDiceValue;
